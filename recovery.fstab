@@ -1,0 +1,31 @@
+# recovery.fstab for dew (Redmi, mt6768)
+# Physical entries sourced from: /dev/block/by-name (adb ls -la)
+# Logical entries sourced from: lpdump (super partition, group "main")
+# Note: partition physically named "rescue" in by-name is /cache in AOSP — MIUI naming quirk.
+
+# mount point   fstype   device                              flags
+
+/boot           emmc     /dev/block/by-name/boot              flags=slotselect
+/vendor_boot    emmc     /dev/block/by-name/vendor_boot       flags=slotselect
+/dtbo           emmc     /dev/block/by-name/dtbo              flags=slotselect
+/misc           emmc     /dev/block/by-name/misc
+/metadata       f2fs     /dev/block/by-name/metadata          flags=display="Metadata"
+/cache          ext4     /dev/block/by-name/rescue             flags=display="Cache"
+
+/data           f2fs     /dev/block/by-name/userdata           flags=fileencryption=ice;fbe_enabled;display="Data"
+
+# --- Logical / dynamic partitions (live inside super, group "main") ---
+# fstype confirmed erofs via /proc/mounts and blkid magic-byte check.
+# slotselect required — /dev/block/mapper/ only has _a/_b suffixed nodes, no bare name exists.
+/system         erofs    /dev/block/mapper/system              flags=logical;slotselect;first_stage_mount;display="System"
+/vendor         erofs    /dev/block/mapper/vendor              flags=logical;slotselect;first_stage_mount;display="Vendor"
+/vendor_dlkm    erofs    /dev/block/mapper/vendor_dlkm          flags=logical;slotselect;first_stage_mount;display="Vendor_dlkm"
+/odm_dlkm       erofs    /dev/block/mapper/odm_dlkm             flags=logical;slotselect;first_stage_mount;display="Odm_dlkm"
+/system_dlkm    erofs    /dev/block/mapper/system_dlkm          flags=logical;slotselect;first_stage_mount;display="System_dlkm"
+/mi_ext         erofs    /dev/block/mapper/mi_ext               flags=logical;slotselect;first_stage_mount;display="Mi_ext"
+/product        erofs    /dev/block/mapper/product              flags=logical;slotselect;first_stage_mount;display="Product"
+/system_ext     erofs    /dev/block/mapper/system_ext           flags=logical;slotselect;first_stage_mount;display="System_ext"
+
+# --- Storage ---
+/external_sd    auto     /dev/block/mmcblk1p1                   flags=display="MicroSD";storage;wipeingui;removable
+/usb-otg        auto     /dev/block/sda1                        flags=display="USB-OTG";storage;wipeingui;removable
