@@ -28,6 +28,9 @@ TARGET_KERNEL_HEADER_ARCH := arm64
 # Required unconditionally by vendor/twrp/build/tasks/kernel.mk regardless of
 # BUILD_TARGET (boot/recovery/vendorboot) — it's parsed on every build.
 TARGET_PREBUILT_KERNEL := device/redmi/dew/prebuilt/kernel/Image
+# vendor_boot.img depends on dtb.img — only gets a build rule if this points
+# to a folder of *.dtb files (they get concatenated into dtb.img).
+BOARD_PREBUILT_DTBIMAGE_DIR := device/redmi/dew/prebuilt/dtb
 
 # --- A/B + Dynamic Partitions (confirmed from by-name + /proc/mounts dm- entries) ---
 AB_OTA_UPDATER := true
