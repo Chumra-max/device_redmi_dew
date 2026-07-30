@@ -27,7 +27,7 @@ TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 # Required unconditionally by vendor/twrp/build/tasks/kernel.mk regardless of
 # BUILD_TARGET (boot/recovery/vendorboot) — it's parsed on every build.
-TARGET_PREBUILT_KERNEL := device/redmi/dew/prebuilt/kernel/kernel
+TARGET_PREBUILT_KERNEL := device/redmi/dew/prebuilt/kernel/Image
 
 # --- A/B + Dynamic Partitions (confirmed from by-name + /proc/mounts dm- entries) ---
 AB_OTA_UPDATER := true
